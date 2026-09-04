@@ -1,0 +1,112 @@
+name: Migrate
+
+# Lancement à la demande : une URL GitHub → un run complet → rapport versionné + PR sur le fork.
+on:
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: "URL GitHub du dépôt (ou du sous-dossier : .../tree/<ref>/<dossier>)"
+        required: false
+        default: ""
+      target_id:
+        description: "Ou bien l'identifiant d'une cible du banc d'essai (benchmark/targets.json)"
+        required: false
+        default: "eshop-mvc"
+      solution:
+        description: "Fichier .sln à cibler (optionnel)"
+        required: false
+        default: ""
+      exclude:
+        description: "Dossiers à retirer de la copie de travail, séparés par des virgules (optionnel)"
+        required: false
+        default: ""
+      target_framework:
+        description: "Cible .NET"
+        required: false
+        default: "net8.0"
+      budget_usd:
+        description: "Plafond de dépense du run (USD)"
+        required: false
+        default: "15"
+      worker_model:
+        description: "Modèle des agents de travail (sonnet / opus)"
+        required: false
+        default: "sonnet"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: forge-runs
+  cancel-in-progress: false
+
+jobs:
+  forge:
+    name: Run de la forge
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    outputs:
+      run_id: ${{ steps.run.outputs.run_id }}
+      status: ${{ steps.run.outputs.status }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+      - run: npm ci
+      - run: npm run build
+
+      - name: Run
+        id: run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}
+          FORGE_GITHUB_OWNER: ${{ github.repository_owner }}
+          FORGE_TARGET: ${{ inputs.target_framework }}
+          FORGE_RUN_BUDGET_USD: ${{ inputs.budget_usd }}
+          FORGE_MODEL_WORKER: ${{ inputs.worker_model }}
+          DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+          DOTNET_NOLOGO: "1"
+        run: |
+          set -o pipefail
+          if [ -n "${{ inputs.repo_url }}" ]; then
+            args=("${{ inputs.repo_url }}")
+            [ -n "${{ inputs.solution }}" ] && args+=(--solution "${{ inputs.solution }}")
+            [ -n "${{ inputs.exclude }}" ] && args+=(--exclude "${{ inputs.exclude }}")
+          else
+            args=(--id "${{ inputs.target_id }}")
+          fi
+          node dist/index.js run "${args[@]}" 2>&1 | tee forge-output.log || true
+          run_dir=$(ls -td runs/*/ | head -1)
+          echo "run_id=$(basename "$run_dir")" >> "$GITHUB_OUTPUT"
+          echo "status=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$run_dir/report.json','utf8')).status)")" >> "$GITHUB_OUTPUT"
+          echo "## Rapport" >> "$GITHUB_STEP_SUMMARY"
+          cat "$run_dir/report.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Artefacts du run (transcripts, diffs, logs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.run.outputs.run_id }}
+          path: |
+            runs/${{ steps.run.outputs.run_id }}/
+            !runs/${{ steps.run.outputs.run_id }}/work/
+            forge-output.log
+          retention-days: 90
+
+      - name: Versionner le rapport et le tableau de bord
+        if: always()
+        run: |
+          git config user.name "legacy-forge[bot]"
+          git config user.email "legacy-forge[bot]@users.noreply.github.com"
+          git add -A runs/
+          git diff --cached --quiet && echo "rien à versionner" && exit 0
+          git commit -m "forge: run ${{ steps.run.outputs.run_id }} → ${{ steps.run.outputs.status }}"
+          git pull --rebase origin main
+          git push origin HEAD:main

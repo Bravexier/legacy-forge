@@ -1,0 +1,44 @@
+name: Scout
+
+# L'éclaireur : chaque lundi matin, il cherche des dépôts publics encore sur .NET Framework
+# et met à jour benchmark/CANDIDATES.md. Pas d'IA, pas de coût : uniquement l'API GitHub.
+on:
+  workflow_dispatch:
+    inputs:
+      min_stars:
+        description: "Étoiles minimales"
+        required: false
+        default: "25"
+  schedule:
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Recherche
+        env:
+          # La recherche de code GitHub exige un token : FORGE_TOKEN (PAT) si présent, sinon le token du workflow.
+          FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node dist/index.js scout --min-stars "${{ inputs.min_stars || '25' }}"
+      - name: Versionner les candidats
+        run: |
+          git config user.name "legacy-forge[bot]"
+          git config user.email "legacy-forge[bot]@users.noreply.github.com"
+          git add benchmark/CANDIDATES.md benchmark/candidates.json
+          git diff --cached --quiet && echo "rien de nouveau" && exit 0
+          git commit -m "forge: scout $(date -u +%F)"
+          git pull --rebase origin main
+          git push origin HEAD:main

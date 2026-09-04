@@ -1,0 +1,10 @@
+{
+  "approved": false,
+  "score": 0,
+  "summary": "Dry run : pas de relecture IA",
+  "findings": [],
+  "mustFix": [
+    "Relecture IA indisponible"
+  ],
+  "cheatingDetected": false
+}

@@ -1,0 +1,32 @@
+{
+  "runId": "20260904-1226-eshop-webforms",
+  "target": "eshop-webforms",
+  "repo": "dotnet-architecture/eShopModernizing",
+  "ref": "main",
+  "startedAt": "2026-09-04T12:26:31.727Z",
+  "endedAt": "2026-09-04T12:26:37.390Z",
+  "status": "declined",
+  "statusReason": "Non migrable automatiquement : ASP.NET WebForms n'a pas d'équivalent en .NET moderne : réécriture (Razor Pages / Blazor) nécessaire (conforme à l'attendu)",
+  "migratable": false,
+  "loops": 0,
+  "costUsd": 0,
+  "turns": 0,
+  "durationMin": 0.1,
+  "stages": [
+    {
+      "stage": "analyze",
+      "loop": 0,
+      "costUsd": 0,
+      "turns": 0,
+      "toolCalls": 0,
+      "durationS": 0,
+      "subtype": "dry_run",
+      "notes": [
+        "migratable=false",
+        "risque=high",
+        "4 étapes"
+      ]
+    }
+  ],
+  "dryRun": true
+}

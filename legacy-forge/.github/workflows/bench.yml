@@ -1,0 +1,73 @@
+name: Bench
+
+# Le banc d'essai complet. Volontairement SANS planification automatique tant que le pilote
+# n'a pas fixé un budget hebdomadaire : décommenter `schedule` est une décision, pas un défaut.
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "Identifiants de cibles séparés par des espaces (vide = toutes les cibles activées)"
+        required: false
+        default: ""
+      budget_usd:
+        description: "Plafond par run (USD)"
+        required: false
+        default: "10"
+  # schedule:
+  #   - cron: "0 3 * * 0"   # dimanche 03:00 UTC
+
+permissions:
+  contents: write
+
+concurrency:
+  group: forge-runs
+  cancel-in-progress: false
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+      - run: npm ci
+      - run: npm run build
+      - name: Banc d'essai
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}
+          FORGE_GITHUB_OWNER: ${{ github.repository_owner }}
+          FORGE_RUN_BUDGET_USD: ${{ inputs.budget_usd }}
+          DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+          DOTNET_NOLOGO: "1"
+        run: |
+          node dist/index.js bench ${{ inputs.ids }} 2>&1 | tee bench-output.log || true
+          echo "## Tableau de bord" >> "$GITHUB_STEP_SUMMARY"
+          cat runs/README.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bench-${{ github.run_id }}
+          path: |
+            runs/
+            !runs/*/work/
+            bench-output.log
+          retention-days: 90
+      - name: Versionner les rapports
+        if: always()
+        run: |
+          git config user.name "legacy-forge[bot]"
+          git config user.email "legacy-forge[bot]@users.noreply.github.com"
+          git add -A runs/
+          git diff --cached --quiet && echo "rien à versionner" && exit 0
+          git commit -m "forge: bench ${{ github.run_id }}"
+          git pull --rebase origin main
+          git push origin HEAD:main

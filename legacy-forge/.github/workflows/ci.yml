@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    name: Typecheck + tests unitaires + dry run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      # Le pipeline complet, sans appel au modèle : clone, inventaire, plan de repli, rapport.
+      - name: Dry run du pipeline sur la cible de référence
+        env:
+          FORGE_DRY_RUN: "1"
+        run: |
+          npm run build
+          node dist/index.js run --id eshop-webforms
+          node dist/index.js run --id eshop-mvc || true
+          cat runs/README.md

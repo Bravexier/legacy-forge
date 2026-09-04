@@ -1,0 +1,78 @@
+{
+  "summary": "Solution de 1 projet(s), 2406 lignes. Plan de repli généré sans analyse IA.",
+  "projects": [
+    {
+      "path": "src/eShopLegacyWebForms/eShopLegacyWebForms.csproj",
+      "kind": "webforms",
+      "targetFramework": "v4.7.2",
+      "sdkStyle": false,
+      "packages": [
+        "Antlr",
+        "AspNet.ScriptManager.bootstrap",
+        "AspNet.ScriptManager.jQuery",
+        "Autofac",
+        "Autofac.Web",
+        "EntityFramework",
+        "Microsoft.ApplicationInsights",
+        "Microsoft.ApplicationInsights.Agent.Intercept",
+        "Microsoft.ApplicationInsights.DependencyCollector",
+        "Microsoft.ApplicationInsights.PerfCounterCollector",
+        "Microsoft.ApplicationInsights.Web",
+        "Microsoft.ApplicationInsights.WindowsServer",
+        "Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel",
+        "Microsoft.AspNet.FriendlyUrls",
+        "Microsoft.AspNet.FriendlyUrls.Core",
+        "Microsoft.AspNet.ScriptManager.MSAjax",
+        "Microsoft.AspNet.ScriptManager.WebForms",
+        "Microsoft.AspNet.SessionState.SessionStateModule",
+        "Microsoft.AspNet.TelemetryCorrelation",
+        "Microsoft.AspNet.Web.Optimization"
+      ],
+      "blockers": [
+        "ASP.NET WebForms n'a pas d'équivalent en .NET moderne : réécriture (Razor Pages / Blazor) nécessaire"
+      ],
+      "linesOfCode": 2406
+    }
+  ],
+  "hasTests": false,
+  "migratable": false,
+  "notMigratableReason": "ASP.NET WebForms n'a pas d'équivalent en .NET moderne : réécriture (Razor Pages / Blazor) nécessaire",
+  "strategy": [
+    {
+      "order": 1,
+      "title": "Convertir les .csproj au format SDK",
+      "rationale": "Prérequis à toute cible moderne",
+      "risk": "low",
+      "files": [
+        "src/eShopLegacyWebForms/eShopLegacyWebForms.csproj"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Retargeter vers net8.0 et remplacer packages.config par PackageReference",
+      "rationale": "Le cœur de la migration",
+      "risk": "medium",
+      "files": [
+        "src/eShopLegacyWebForms/eShopLegacyWebForms.csproj"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Corriger les erreurs de compilation projet par projet",
+      "rationale": "Boucle build → fix",
+      "risk": "medium",
+      "files": []
+    },
+    {
+      "order": 4,
+      "title": "Faire passer les tests existants (ou créer des tests de fumée)",
+      "rationale": "Preuve de non-régression",
+      "risk": "medium",
+      "files": []
+    }
+  ],
+  "estimatedRisk": "high",
+  "notes": [
+    "ASP.NET WebForms n'a pas d'équivalent en .NET moderne : réécriture (Razor Pages / Blazor) nécessaire"
+  ]
+}

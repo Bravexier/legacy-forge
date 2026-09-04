@@ -1,0 +1,84 @@
+{
+  "summary": "Solution de 2 projet(s), 2141 lignes. Plan de repli généré sans analyse IA.",
+  "projects": [
+    {
+      "path": "eShopLegacy.Utilities/eShopLegacy.Utilities.csproj",
+      "kind": "library",
+      "targetFramework": "v4.6.1",
+      "sdkStyle": false,
+      "packages": [],
+      "blockers": [],
+      "linesOfCode": 62
+    },
+    {
+      "path": "src/eShopLegacyMVC/eShopLegacyMVC.csproj",
+      "kind": "web-mvc",
+      "targetFramework": "v4.7.2",
+      "sdkStyle": false,
+      "packages": [
+        "Antlr",
+        "Autofac",
+        "Autofac.Mvc5",
+        "EntityFramework",
+        "Microsoft.ApplicationInsights",
+        "Microsoft.ApplicationInsights.Agent.Intercept",
+        "Microsoft.ApplicationInsights.DependencyCollector",
+        "Microsoft.ApplicationInsights.PerfCounterCollector",
+        "Microsoft.ApplicationInsights.Web",
+        "Microsoft.ApplicationInsights.WindowsServer",
+        "Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel",
+        "Microsoft.AspNet.Mvc",
+        "Microsoft.AspNet.Razor",
+        "Microsoft.AspNet.SessionState.SessionStateModule",
+        "Microsoft.AspNet.TelemetryCorrelation",
+        "Microsoft.AspNet.Web.Optimization",
+        "Microsoft.AspNet.WebApi",
+        "Microsoft.AspNet.WebApi.Client",
+        "Microsoft.AspNet.WebApi.Core",
+        "Microsoft.AspNet.WebApi.WebHost"
+      ],
+      "blockers": [],
+      "linesOfCode": 2079
+    }
+  ],
+  "hasTests": false,
+  "migratable": true,
+  "strategy": [
+    {
+      "order": 1,
+      "title": "Convertir les .csproj au format SDK",
+      "rationale": "Prérequis à toute cible moderne",
+      "risk": "low",
+      "files": [
+        "eShopLegacy.Utilities/eShopLegacy.Utilities.csproj",
+        "src/eShopLegacyMVC/eShopLegacyMVC.csproj"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Retargeter vers net8.0 et remplacer packages.config par PackageReference",
+      "rationale": "Le cœur de la migration",
+      "risk": "medium",
+      "files": [
+        "eShopLegacy.Utilities/eShopLegacy.Utilities.csproj",
+        "src/eShopLegacyMVC/eShopLegacyMVC.csproj"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Corriger les erreurs de compilation projet par projet",
+      "rationale": "Boucle build → fix",
+      "risk": "medium",
+      "files": []
+    },
+    {
+      "order": 4,
+      "title": "Faire passer les tests existants (ou créer des tests de fumée)",
+      "rationale": "Preuve de non-régression",
+      "risk": "medium",
+      "files": []
+    }
+  ],
+  "estimatedRisk": "medium",
+  "notes": []
+}
