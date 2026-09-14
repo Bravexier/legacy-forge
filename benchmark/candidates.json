@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T11:45:28.474Z",
+  "generatedAt": "2026-09-14T11:58:16.644Z",
   "queries": [
     "TargetFrameworkVersion v4.8 extension:csproj",
     "TargetFrameworkVersion v4.7.2 extension:csproj",
@@ -7,40 +7,6 @@
     "TargetFrameworkVersion v4.5.2 extension:csproj"
   ],
   "candidates": [
-    {
-      "repo": "deanhume/html-minifier",
-      "url": "https://github.com/deanhume/html-minifier",
-      "description": "Fast command-line HTML minifier — works on any HTML, with special support for Razor and Web Forms views. Parallel processing, safe preservat",
-      "stars": 142,
-      "license": "mit",
-      "pushedAt": "2026-09-03",
-      "archived": false,
-      "sizeKb": 26884,
-      "csprojCount": 2,
-      "csFileCount": 15,
-      "hasTests": true,
-      "hasWebForms": false,
-      "hasWinForms": false,
-      "difficulty": 1,
-      "score": 123
-    },
-    {
-      "repo": "Planshit/Tai",
-      "url": "https://github.com/Planshit/Tai",
-      "description": "👻 在Windows上统计软件使用时长和网站浏览时长",
-      "stars": 5080,
-      "license": "mit",
-      "pushedAt": "2025-06-19",
-      "archived": false,
-      "sizeKb": 1981,
-      "csprojCount": 4,
-      "csFileCount": 216,
-      "hasTests": false,
-      "hasWebForms": false,
-      "hasWinForms": false,
-      "difficulty": 2,
-      "score": 111
-    },
     {
       "repo": "jimmejardine/qiqqa-open-source",
       "url": "https://github.com/jimmejardine/qiqqa-open-source",
@@ -62,7 +28,7 @@
       "repo": "opensource-emr/hospital-management-emr",
       "url": "https://github.com/opensource-emr/hospital-management-emr",
       "description": "A complete open source for electronic healthcare record management in Hospitals, Clinics and Pharmacy.",
-      "stars": 526,
+      "stars": 528,
       "license": "mit",
       "pushedAt": "2024-09-02",
       "archived": false,
@@ -79,7 +45,7 @@
       "repo": "zjxi/HospitalManagementSystem-WPF",
       "url": "https://github.com/zjxi/HospitalManagementSystem-WPF",
       "description": "A WPF-based hospital information management system. 医疗信息管理系统，基于WPF (XAML前端+C#后台)，内附SQL Server 2012数据库，界面友好，功能实用。",
-      "stars": 389,
+      "stars": 390,
       "license": "apache-2.0",
       "pushedAt": "2025-07-04",
       "archived": false,
@@ -98,9 +64,9 @@
       "description": "Home Theater and Digital Video Recording solution for Windows.",
       "stars": 268,
       "license": "gpl-3.0",
-      "pushedAt": "2026-09-03",
+      "pushedAt": "2026-09-07",
       "archived": false,
-      "sizeKb": 2247189,
+      "sizeKb": 2247192,
       "csprojCount": 116,
       "csFileCount": 3092,
       "hasTests": true,
@@ -113,7 +79,7 @@
       "repo": "DigitalPlatform/dp2",
       "url": "https://github.com/DigitalPlatform/dp2",
       "description": "Integrated Library System / 图书馆集成系统",
-      "stars": 116,
+      "stars": 118,
       "license": "apache-2.0",
       "pushedAt": "2026-06-03",
       "archived": false,
@@ -124,7 +90,7 @@
       "hasWebForms": true,
       "hasWinForms": false,
       "difficulty": 5,
-      "score": 89
+      "score": 90
     },
     {
       "repo": "yohney/dto-generator",
@@ -176,6 +142,23 @@
       "hasWinForms": false,
       "difficulty": 5,
       "score": 58
+    },
+    {
+      "repo": "qiubytes/ycfzOA",
+      "url": "https://github.com/qiubytes/ycfzOA",
+      "description": "一款 C# Winform+SQL Server2016 做的人力资源管理系统",
+      "stars": 30,
+      "license": "gpl-2.0",
+      "pushedAt": "2018-02-12",
+      "archived": false,
+      "sizeKb": 10137,
+      "csprojCount": 4,
+      "csFileCount": 129,
+      "hasTests": false,
+      "hasWebForms": false,
+      "hasWinForms": true,
+      "difficulty": 2,
+      "score": 52
     }
   ]
 }
