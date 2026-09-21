@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T11:58:16.644Z",
+  "generatedAt": "2026-09-21T12:09:27.619Z",
   "queries": [
     "TargetFrameworkVersion v4.8 extension:csproj",
     "TargetFrameworkVersion v4.7.2 extension:csproj",
@@ -28,7 +28,7 @@
       "repo": "opensource-emr/hospital-management-emr",
       "url": "https://github.com/opensource-emr/hospital-management-emr",
       "description": "A complete open source for electronic healthcare record management in Hospitals, Clinics and Pharmacy.",
-      "stars": 528,
+      "stars": 532,
       "license": "mit",
       "pushedAt": "2024-09-02",
       "archived": false,
@@ -39,7 +39,7 @@
       "hasWebForms": false,
       "hasWinForms": true,
       "difficulty": 4,
-      "score": 100
+      "score": 101
     },
     {
       "repo": "zjxi/HospitalManagementSystem-WPF",
@@ -62,11 +62,11 @@
       "repo": "MediaPortal/MediaPortal-1",
       "url": "https://github.com/MediaPortal/MediaPortal-1",
       "description": "Home Theater and Digital Video Recording solution for Windows.",
-      "stars": 268,
+      "stars": 269,
       "license": "gpl-3.0",
-      "pushedAt": "2026-09-07",
+      "pushedAt": "2026-09-21",
       "archived": false,
-      "sizeKb": 2247192,
+      "sizeKb": 2248806,
       "csprojCount": 116,
       "csFileCount": 3092,
       "hasTests": true,
@@ -79,7 +79,7 @@
       "repo": "DigitalPlatform/dp2",
       "url": "https://github.com/DigitalPlatform/dp2",
       "description": "Integrated Library System / 图书馆集成系统",
-      "stars": 118,
+      "stars": 119,
       "license": "apache-2.0",
       "pushedAt": "2026-06-03",
       "archived": false,
@@ -142,23 +142,6 @@
       "hasWinForms": false,
       "difficulty": 5,
       "score": 58
-    },
-    {
-      "repo": "qiubytes/ycfzOA",
-      "url": "https://github.com/qiubytes/ycfzOA",
-      "description": "一款 C# Winform+SQL Server2016 做的人力资源管理系统",
-      "stars": 30,
-      "license": "gpl-2.0",
-      "pushedAt": "2018-02-12",
-      "archived": false,
-      "sizeKb": 10137,
-      "csprojCount": 4,
-      "csFileCount": 129,
-      "hasTests": false,
-      "hasWebForms": false,
-      "hasWinForms": true,
-      "difficulty": 2,
-      "score": 52
     }
   ]
 }
